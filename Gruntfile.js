@@ -7,10 +7,25 @@ module.exports = function(grunt) {
 		connect: {
 			options: {
 				port: 8080,
-				hostname: '*'
+				hostname: '*',
+				livereload: true
 			},
 			src: {},
 			dist: {}
+		},
+
+		watch: {
+			options: {
+				livereload: true
+			},
+			css: {
+				files: ['webapp/**/*.less', 'webapp/**/*.css'],
+				tasks: ['build']
+			},
+			js: {
+				files: ['webapp/**/*.js', 'webapp/**/*.xml', 'webapp/**/*.json', 'webapp/**/*.html', 'webapp/**/*.properties'],
+				tasks: ['build']
+			}
 		},
 
 		openui5_connect: {
@@ -188,10 +203,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-openui5');
 	grunt.loadNpmTasks('grunt-eslint');
 	grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
 	// Server task
 	grunt.registerTask('serve', function(target) {
-		grunt.task.run('openui5_connect:' + (target || 'src') + ':keepalive');
+		grunt.task.run('openui5_connect:' + (target || 'src'));
+		grunt.task.run('watch');
 	});
 
 	// Linting task
@@ -199,7 +216,7 @@ module.exports = function(grunt) {
 
 	// Test tasks
 	grunt.registerTask('test', ['clean:coverage', 'openui5_connect:src', 'karma:ci']);
-	grunt.registerTask('watch', ['openui5_connect:src', 'karma:watch']);
+	grunt.registerTask('karma-watch', ['openui5_connect:src', 'karma:watch']);
 	grunt.registerTask('coverage', ['clean:coverage', 'openui5_connect:src', 'karma:coverage']);
 
 	// Build task
