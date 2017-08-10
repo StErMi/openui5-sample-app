@@ -25,6 +25,8 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-qunit": "^1.2.1",
     "karma-sinon": "^1.0.5",
-    "qunitjs": "^2.0.0"
+    "qunitjs": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "connect-livereload": "^0.6.0"
   }
 }
